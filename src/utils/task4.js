@@ -1,4 +1,4 @@
-export function canGiftEveryone(tshirts, sizes) {
+export const canGiftEveryone = (tshirts, sizes) => {
 	const tshirtCount = {};
 	for (let i = 0; i < tshirts.length; i++) {
 		const size = tshirts[i];

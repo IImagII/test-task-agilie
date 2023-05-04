@@ -3,6 +3,7 @@ import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import Task1 from '../components/Task1'
 import Task2 from '../components/Task2'
 import Task3 from '../components/Task3'
+import Task4 from '../components/Task4'
 
 export const Home = () => {
   return (
@@ -33,7 +34,7 @@ export const Home = () => {
                 <Task3 />
               </TabPanel>
               <TabPanel>
-                <p>two!</p>
+                <Task4 />
               </TabPanel>
               <TabPanel>
                 <p>two!</p>

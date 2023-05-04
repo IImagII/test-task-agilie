@@ -1,16 +1,21 @@
 import { Box, FormControl, FormLabel, Input } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { findOptimalDiscCombination } from '../utils/task3'
+import { transformDisplay } from '../utils/transformDisplay'
 
 const Task3 = () => {
   const [currentWeight, setCurrentWeight] = useState('')
-
-  const handleWeightChange = (event) => {
-    setCurrentWeight(event.target.valueAsNumber)
-  }
+  const [displayShow, setDisplayShow] = useState()
 
   const nextWeight = findOptimalDiscCombination(parseInt(currentWeight))
+
+  useEffect(() => {
+    if (nextWeight) {
+      const res = transformDisplay(nextWeight.plates)
+      setDisplayShow(res)
+    }
+  }, [nextWeight])
 
   return (
     <>
@@ -27,16 +32,16 @@ const Task3 = () => {
               placeholder="current weight"
               type="number"
               value={currentWeight}
-              onChange={handleWeightChange}
+              onChange={(e) => setCurrentWeight(e.target.valueAsNumber)}
             />
           </FormControl>{' '}
           <Box>
             {nextWeight && nextWeight.plates ? (
               <Box as="p">
                 <Box>
-                  Next weight to beat: {nextWeight.totalWeight.toFixed(2)}
+                  Next weight to beat: {nextWeight.totalWeight.toFixed(1)}
                 </Box>
-                <Box>Используются следующие </Box>
+                <Box>minimum next set of disc loaders: {displayShow}</Box>
               </Box>
             ) : (
               <Box as="p">No possible weight to win</Box>
