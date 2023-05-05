@@ -24,6 +24,18 @@ server.post(`/${RESPONSE}/${TASK}2`, (req, res) => {
    updateResponseData(`${RESPONSE}_${TASK}2`, filePath, req.body, res);
 });
 
+server.post(`/${RESPONSE}/${TASK}3`, (req, res) => {
+   updateResponseData(`${RESPONSE}_${TASK}3`, filePath, req.body, res);
+});
+
+server.post(`/${RESPONSE}/${TASK}4`, (req, res) => {
+   updateResponseData(`${RESPONSE}_${TASK}4`, filePath, req.body, res);
+});
+
+server.post(`/${RESPONSE}/${TASK}5`, (req, res) => {
+   updateResponseData(`${RESPONSE}_${TASK}5`, filePath, req.body, res);
+});
+
 server.use(router)
 
 server.listen(3004, () => {

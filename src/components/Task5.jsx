@@ -12,10 +12,12 @@ import { useState } from 'react'
 
 import { tasks } from '../../data'
 import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
+import { useSendInputData } from '../hooks/useSendInputData'
 import { generateScene } from '../utils/task5/generatorScene'
 import { countGoodPositions } from '../utils/task5/task5'
 
 const Task5 = () => {
+  const task5 = 'task5'
   const [sizeSceneForm, setSizeSceneForm] = useState({
     actors: '',
     long: '',
@@ -25,12 +27,18 @@ const Task5 = () => {
 
   const { isOpen, onClose } = useDisclosure()
 
+  const sendInputDataForTask = useSendInputData(task5)
+
+  const sendResponseData = useSendInputData(`response/${task5}`)
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
     const { actors, long, width } = sizeSceneForm
     const res = generateScene(actors, long, width)
 
+    sendInputDataForTask.mutate(sizeSceneForm)
+    sendResponseData.mutate({ data: count })
     setCount(countGoodPositions(res))
   }
 
@@ -48,7 +56,7 @@ const Task5 = () => {
       <Box display="flex" alignItems="center" justifyContent="center" mt={20}>
         <Box maxW="2xl" p={50} textAlign="center">
           <Text mb={5} fontSize={20}>
-            Длина матрицы
+            Matrix length
           </Text>
           <form onSubmit={handleSubmit}>
             <Box display="flex" mb={10} w="100%">

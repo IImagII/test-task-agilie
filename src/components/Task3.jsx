@@ -6,24 +6,47 @@ import {
   Input,
   useDisclosure
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { tasks } from '../../data'
 import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
+import useDebounce from '../hooks/useDebounce'
+import { useSendInputData } from '../hooks/useSendInputData'
 import { findOptimalDiscCombination } from '../utils/task3/task3'
 import { transformDisplay } from '../utils/task3/transformDisplay'
 
 const Task3 = () => {
+  const task3 = 'task3'
+
   const [currentWeight, setCurrentWeight] = useState('')
+
+  const debounceWeight = useDebounce(currentWeight, 700)
+  console.log('🚀 ~ debounceWeight:', debounceWeight)
+
   const [displayShow, setDisplayShow] = useState()
 
-  const nextWeight = findOptimalDiscCombination(parseInt(currentWeight))
+  const nextWeight = useMemo(() => {
+    if (debounceWeight) {
+      return findOptimalDiscCombination(parseInt(debounceWeight))
+    }
+  }, [debounceWeight])
+
+  const sendInputDataForTask = useSendInputData(task3)
+
+  const sendResponseData = useSendInputData(`response/${task3}`)
+
+  const handleCurrentWeight = (e) => {
+    const data = e.target.valueAsNumber
+    setCurrentWeight(data)
+    sendInputDataForTask.mutate({ data: data })
+  }
 
   const { isOpen, onClose } = useDisclosure()
 
   useEffect(() => {
     if (nextWeight) {
       const res = transformDisplay(nextWeight.plates)
+      sendResponseData.mutate(nextWeight)
       setDisplayShow(res)
     }
   }, [nextWeight])
@@ -52,7 +75,8 @@ const Task3 = () => {
               placeholder="current weight"
               type="number"
               value={currentWeight}
-              onChange={(e) => setCurrentWeight(e.target.valueAsNumber)}
+              // onChange={(e) => setCurrentWeight(e.target.valueAsNumber)}
+              onChange={handleCurrentWeight}
             />
           </FormControl>{' '}
           <Box>

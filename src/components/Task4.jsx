@@ -3,15 +3,22 @@ import { useState } from 'react'
 
 import { tasks } from '../../data'
 import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
+import { useSendInputData } from '../hooks/useSendInputData'
 import { canGiftEveryone } from '../utils/task4/task4'
 
 const Task4 = () => {
+  const task4 = 'task4'
   const [selectedSizes, setSelectedSizes] = useState([])
+  console.log('🚀 ~ selectedSizes:', selectedSizes)
   const [showResult, setShowResult] = useState(false)
 
   const tshirts = ['S', 'M', 'L', 'XL', 'XXL']
 
   const { isOpen, onClose } = useDisclosure()
+
+  const sendInputDataForTask = useSendInputData(task4)
+
+  const sendResponseData = useSendInputData(`response/${task4}`)
 
   const handleSizeSelect = (size) => {
     setSelectedSizes((prev) => [...prev, size])
@@ -23,6 +30,10 @@ const Task4 = () => {
   const handleGift = () => {
     const canGift = canGiftEveryone(tshirts, selectedSizes)
     setShowResult(canGift)
+    const data = selectedSizes.join('')
+    console.log('🚀 ~ data:', data)
+    sendInputDataForTask.mutate({ data })
+    sendResponseData.mutate({ data: canGift })
   }
 
   return (

@@ -1,9 +1,9 @@
 import { Box, Button, Heading, useDisclosure } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { tasks } from '../../data'
 import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
-import { TaskService } from '../services/task.service'
+import { useSendInputData } from '../hooks/useSendInputData'
 import { generateArray } from '../utils/task2/generatorNumber'
 import { findDuplicate } from '../utils/task2/task2'
 
@@ -16,36 +16,25 @@ const Task2 = () => {
 
   const { isOpen, onClose } = useDisclosure()
 
+  const sendInputDataForTask = useSendInputData(task2)
+
+  const sendResponseData = useSendInputData(`response/${task2}`)
+
   const handleGenerateNumber = async () => {
     const array = generateArray()
 
     setArr(array)
     setDuplicate(null)
-
-    try {
-      await TaskService.sendInputData(`${task2}`, array)
-    } catch (err) {
-      console.warn(err.message)
-    }
+    const data = Number(array.join(''))
+    sendInputDataForTask.mutate({ data })
   }
 
   const handleFindDuplicate = () => {
     const res = findDuplicate(arr)
 
     setDuplicate(res)
+    sendResponseData.mutate(JSON.stringify({ data: res }))
   }
-
-  useEffect(() => {
-    const sendData = async () => {
-      try {
-        await TaskService.sendInputData(`response/${task2}`, { duplicate })
-      } catch (err) {
-        console.warn(err.message)
-      }
-    }
-
-    sendData()
-  }, [duplicate])
 
   return (
     <>
