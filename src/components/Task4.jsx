@@ -1,18 +1,25 @@
-import { Box, Button, Text } from '@chakra-ui/react'
+import { Box, Button, Heading, Text, useDisclosure } from '@chakra-ui/react'
 import { useState } from 'react'
 
-import { canGiftEveryone } from '../utils/task4'
+import { canGiftEveryone } from '../utils/task4/task4'
+import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
+import { tasks } from '../../data'
 
 const Task4 = () => {
   const [selectedSizes, setSelectedSizes] = useState([])
-  console.log('🚀 ~ selectedSizes:', selectedSizes)
   const [showResult, setShowResult] = useState(false)
-  const tshirts = ['S', 'M', 'M', 'L', 'XXL']
+
+  const tshirts = ['S', 'M', 'L', 'XL', 'XXL']
+
+  const { isOpen, onClose } = useDisclosure()
 
   const handleSizeSelect = (size) => {
     setSelectedSizes((prev) => [...prev, size])
   }
 
+  const reset = () => {
+    setSelectedSizes([])
+  }
   const handleGift = () => {
     const canGift = canGiftEveryone(tshirts, selectedSizes)
     setShowResult(canGift)
@@ -20,8 +27,17 @@ const Task4 = () => {
 
   return (
     <>
+    <Heading as="h1" size="md" textAlign="center">
+        TASK-3.2
+      </Heading>
+      <VerticallyCenter
+        isOpen={isOpen}
+        onClose={onClose}
+        text={tasks[3].task4}
+        title={tasks[3].title}
+      />
       <Box
-        maxW="800"
+        maxW="2xl"
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -42,6 +58,9 @@ const Task4 = () => {
               {tshirt}
             </Button>
           ))}
+          <Button colorScheme="red" onClick={reset}>
+            Reset
+          </Button>
         </Box>
         {selectedSizes.join(' - ')}
         <Box>

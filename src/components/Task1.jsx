@@ -1,14 +1,25 @@
-import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react'
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  useDisclosure
+} from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
 import { useState } from 'react'
 
-import { turnNumber } from '../utils/task1'
+import { tasks } from '../../data'
+import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
+import { turnNumber } from '../utils/task1/task1'
 
 const Task1 = () => {
   const [numberForm, setNumberForm] = useState({
     startNumber: '',
     endNumber: ''
   })
+
+  const { isOpen, onClose } = useDisclosure()
 
   const [result, setResult] = useState(null)
 
@@ -23,10 +34,34 @@ const Task1 = () => {
     setResult(canTransformResult)
   }
 
+  const handleReset = () => {
+    setNumberForm({
+      startNumber: '',
+      endNumber: ''
+    })
+
+    setResult(null)
+  }
+
   return (
     <>
-      <Box display="flex" alignItems="center" justifyContent="center" mt={20}>
-        <Box maxW="xl" p={100}>
+      <Heading as="h1" size="md" textAlign="center">
+        TASK-1
+      </Heading>
+      <VerticallyCenter
+        isOpen={isOpen}
+        onClose={onClose}
+        text={tasks[0].task1}
+        title={tasks[0].title}
+      />
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        mt={20}
+        maxW="2xl"
+      >
+        <Box p={100}>
           <form onSubmit={handleSubmit}>
             <Box display="flex" mb={10}>
               <FormControl isRequired mr={20}>
@@ -59,8 +94,11 @@ const Task1 = () => {
               </FormControl>
             </Box>
             <Box display="flex" alignItems="center" justifyContent="center">
-              <Button colorScheme="blue" type="submit">
-                Transform
+              <Button colorScheme="blue" type="submit" mr={5}>
+                Start the transformation
+              </Button>
+              <Button colorScheme="red" onClick={handleReset}>
+                Reset
               </Button>
             </Box>
           </form>
@@ -68,9 +106,18 @@ const Task1 = () => {
       </Box>
       {result !== null && (
         <Box display="flex" alignItems="center" justifyContent="center">
-          {result
-            ? `The number ${numberForm.startNumber} can be transformed to ${numberForm.endNumber} according to the condition`
-            : `The number ${numberForm.startNumber} cannot be transformed to ${numberForm.endNumber} according to the condition`}
+          {result ? (
+            <Box color="green">
+              The number {numberForm.startNumber} can be transformed to{' '}
+              {numberForm.endNumber} according to the condition
+            </Box>
+          ) : (
+            <Box color="red">
+              The number {numberForm.startNumber} cannot be transformed to{' '}
+              {'  '}
+              {numberForm.endNumber} according to the condition
+            </Box>
+          )}
         </Box>
       )}
     </>

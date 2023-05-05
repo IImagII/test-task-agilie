@@ -8,7 +8,6 @@
     "<THIRD_PARTY_MODULES>",
     "^@/components/(.*)$",
     "^@/services/(.*)$",
-    "^@/assets/(.*)$",
     "^@/hooks/(.*)$",
     "^@/utils/(.*)$",
     "^../(.*)",

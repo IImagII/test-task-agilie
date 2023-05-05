@@ -1,13 +1,17 @@
-import { Box, Button } from '@chakra-ui/react'
+import { Box, Button, Heading, useDisclosure } from '@chakra-ui/react'
 import { useState } from 'react'
 
-import { generateArray } from '../utils/generatorNumber'
-import { findDuplicate } from '../utils/task2'
+import { tasks } from '../../data'
+import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
+import { generateArray } from '../utils/task2/generatorNumber'
+import { findDuplicate } from '../utils/task2/task2'
 
 const Task2 = () => {
   const [arr, setArr] = useState([])
 
   const [duplicate, setDuplicate] = useState(null)
+
+  const { isOpen, onClose } = useDisclosure()
 
   const handleGenerateNumber = () => {
     const array = generateArray()
@@ -23,8 +27,17 @@ const Task2 = () => {
 
   return (
     <>
+      <Heading as="h1" size="md" textAlign="center">
+        TASK-2
+      </Heading>
+      <VerticallyCenter
+        isOpen={isOpen}
+        onClose={onClose}
+        text={tasks[1].task2}
+        title={tasks[1].title}
+      />
       <Box display="flex" alignItems="center" justifyContent="center">
-        <Box maxW="800" p={150}>
+        <Box maxW="2xl" p={150}>
           <Box
             mb={10}
             display="flex"
@@ -56,7 +69,7 @@ const Task2 = () => {
             {duplicate ? (
               <Box size={20}>
                 Найден повторяющийся элемент:{' '}
-                <Box color="red" fontSize="20px">
+                <Box color="red" fontSize="20px" textAlign="center">
                   {duplicate}
                 </Box>
               </Box>

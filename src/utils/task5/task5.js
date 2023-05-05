@@ -1,4 +1,4 @@
-export function countGoodPositions(scene) {
+export const countGoodPositions = (scene) => {
 	const n = scene.length;
 	const m = scene[0].length;
 	let count = 0;
@@ -18,16 +18,12 @@ export function countGoodPositions(scene) {
 				if (scene[k][j] === "A") {
 					hasActorInUp = true;
 					break;
-				} else if (scene[k][j] === "X") {
-					break;
 				}
 			}
 			for (let k = i + 1; k < n; k++) {
 				// вниз
 				if (scene[k][j] === "A") {
 					hasActorInDown = true;
-					break;
-				} else if (scene[k][j] === "X") {
 					break;
 				}
 			}
@@ -36,16 +32,12 @@ export function countGoodPositions(scene) {
 				if (scene[i][k] === "A") {
 					hasActorInLeft = true;
 					break;
-				} else if (scene[i][k] === "X") {
-					break;
 				}
 			}
 			for (let k = j + 1; k < m; k++) {
 				// вправо
 				if (scene[i][k] === "A") {
 					hasActorInRight = true;
-					break;
-				} else if (scene[i][k] === "X") {
 					break;
 				}
 			}
