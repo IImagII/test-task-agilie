@@ -1,29 +1,51 @@
 import { Box, Button, Heading, useDisclosure } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { tasks } from '../../data'
 import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
+import { TaskService } from '../services/task.service'
 import { generateArray } from '../utils/task2/generatorNumber'
 import { findDuplicate } from '../utils/task2/task2'
 
 const Task2 = () => {
+  const task2 = 'task2'
+
   const [arr, setArr] = useState([])
 
   const [duplicate, setDuplicate] = useState(null)
 
   const { isOpen, onClose } = useDisclosure()
 
-  const handleGenerateNumber = () => {
+  const handleGenerateNumber = async () => {
     const array = generateArray()
 
     setArr(array)
     setDuplicate(null)
+
+    try {
+      await TaskService.sendInputData(`${task2}`, array)
+    } catch (err) {
+      console.warn(err.message)
+    }
   }
 
   const handleFindDuplicate = () => {
     const res = findDuplicate(arr)
+
     setDuplicate(res)
   }
+
+  useEffect(() => {
+    const sendData = async () => {
+      try {
+        await TaskService.sendInputData(`response/${task2}`, { duplicate })
+      } catch (err) {
+        console.warn(err.message)
+      }
+    }
+
+    sendData()
+  }, [duplicate])
 
   return (
     <>

@@ -1,9 +1,9 @@
 import { Box, Button, Heading, Text, useDisclosure } from '@chakra-ui/react'
 import { useState } from 'react'
 
-import { canGiftEveryone } from '../utils/task4/task4'
-import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
 import { tasks } from '../../data'
+import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
+import { canGiftEveryone } from '../utils/task4/task4'
 
 const Task4 = () => {
   const [selectedSizes, setSelectedSizes] = useState([])
@@ -27,7 +27,7 @@ const Task4 = () => {
 
   return (
     <>
-    <Heading as="h1" size="md" textAlign="center">
+      <Heading as="h1" size="md" textAlign="center">
         TASK-3.2
       </Heading>
       <VerticallyCenter

@@ -7,13 +7,16 @@ import {
 } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { tasks } from '../../data'
 import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
+import { TaskService } from '../services/task.service'
 import { turnNumber } from '../utils/task1/task1'
 
 const Task1 = () => {
+  const task1 = 'task1'
+
   const [numberForm, setNumberForm] = useState({
     startNumber: '',
     endNumber: ''
@@ -23,15 +26,20 @@ const Task1 = () => {
 
   const [result, setResult] = useState(null)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
     const canTransformResult = turnNumber(
       parseInt(numberForm.startNumber),
       parseInt(numberForm.endNumber)
     )
-
     setResult(canTransformResult)
+
+    try {
+      await TaskService.sendInputData(`${task1}`, numberForm)
+    } catch (err) {
+      console.warn(err.message)
+    }
   }
 
   const handleReset = () => {
@@ -42,6 +50,18 @@ const Task1 = () => {
 
     setResult(null)
   }
+
+  useEffect(() => {
+    const sendData = async () => {
+      try {
+        await TaskService.sendInputData(`response/${task1}`, { result })
+      } catch (err) {
+        console.warn(err.message)
+      }
+    }
+
+    sendData()
+  }, [result])
 
   return (
     <>
