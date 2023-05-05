@@ -11,7 +11,7 @@ import { useState } from 'react'
 
 import { tasks } from '../../data'
 import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
-import { useSendInputData } from '../hooks/useSendInputData'
+import { useChangeInputData, useSendInputData } from '../hooks/useSendInputData'
 import { turnNumber } from '../utils/task1/task1'
 
 const Task1 = () => {
@@ -26,7 +26,7 @@ const Task1 = () => {
 
   const [result, setResult] = useState(null)
 
-  const sendInputDataForTask = useSendInputData(task1)
+  const sendInputDataForTask = useChangeInputData(task1)
 
   const sendResponseData = useSendInputData(`response/${task1}`)
 

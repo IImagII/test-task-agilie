@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { tasks } from '../../data'
 import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
-import { useSendInputData } from '../hooks/useSendInputData'
+import { useChangeInputData, useSendInputData } from '../hooks/useSendInputData'
 import { generateArray } from '../utils/task2/generatorNumber'
 import { findDuplicate } from '../utils/task2/task2'
 
@@ -16,7 +16,7 @@ const Task2 = () => {
 
   const { isOpen, onClose } = useDisclosure()
 
-  const sendInputDataForTask = useSendInputData(task2)
+  const sendInputDataForTask = useChangeInputData(task2)
 
   const sendResponseData = useSendInputData(`response/${task2}`)
 
@@ -55,7 +55,7 @@ const Task2 = () => {
             alignItems="center"
             justifyContent="center"
           >
-            Массив: [{arr.join(', ')}]
+            Array: [{arr.join(', ')}]
           </Box>
           <Box display="flex">
             <Button
@@ -79,13 +79,13 @@ const Task2 = () => {
           >
             {duplicate ? (
               <Box size={20}>
-                Найден повторяющийся элемент:{' '}
+                Duplicate element found:{' '}
                 <Box color="red" fontSize="20px" textAlign="center">
                   {duplicate}
                 </Box>
               </Box>
             ) : (
-              <Box>Не найдено повторяющихся элементов</Box>
+              <Box>No duplicate items found</Box>
             )}
           </Box>
         </Box>

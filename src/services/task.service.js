@@ -7,5 +7,9 @@ export const TaskService = {
 
 	async sendInputData(url, inputData) {
 		return (await axiosClassic.post(url, inputData)).data
+	},
+
+	async changeInputData(url, inputData) {
+		return (await axiosClassic.patch(url, inputData)).data
 	}
 }

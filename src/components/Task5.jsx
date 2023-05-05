@@ -12,7 +12,7 @@ import { useState } from 'react'
 
 import { tasks } from '../../data'
 import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
-import { useSendInputData } from '../hooks/useSendInputData'
+import { useChangeInputData, useSendInputData } from '../hooks/useSendInputData'
 import { generateScene } from '../utils/task5/generatorScene'
 import { countGoodPositions } from '../utils/task5/task5'
 
@@ -27,7 +27,7 @@ const Task5 = () => {
 
   const { isOpen, onClose } = useDisclosure()
 
-  const sendInputDataForTask = useSendInputData(task5)
+  const sendInputDataForTask = useChangeInputData(task5)
 
   const sendResponseData = useSendInputData(`response/${task5}`)
 
@@ -123,7 +123,7 @@ const Task5 = () => {
       <Box display="flex" alignItems="center" justifyContent="center">
         {count !== 0 && (
           <div>
-            Количество хороших позиций:{' '}
+            Number of good positions:{' '}
             <Box as="span" color="red" fontSize={20}>
               {count}
             </Box>

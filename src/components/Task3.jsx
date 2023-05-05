@@ -11,7 +11,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { tasks } from '../../data'
 import { VerticallyCenter } from '../hooks/modal/VerticallyCenter'
 import useDebounce from '../hooks/useDebounce'
-import { useSendInputData } from '../hooks/useSendInputData'
+import { useChangeInputData, useSendInputData } from '../hooks/useSendInputData'
 import { findOptimalDiscCombination } from '../utils/task3/task3'
 import { transformDisplay } from '../utils/task3/transformDisplay'
 
@@ -21,7 +21,6 @@ const Task3 = () => {
   const [currentWeight, setCurrentWeight] = useState('')
 
   const debounceWeight = useDebounce(currentWeight, 700)
-  console.log('🚀 ~ debounceWeight:', debounceWeight)
 
   const [displayShow, setDisplayShow] = useState()
 
@@ -31,7 +30,7 @@ const Task3 = () => {
     }
   }, [debounceWeight])
 
-  const sendInputDataForTask = useSendInputData(task3)
+  const sendInputDataForTask = useChangeInputData(task3)
 
   const sendResponseData = useSendInputData(`response/${task3}`)
 
@@ -81,8 +80,8 @@ const Task3 = () => {
           </FormControl>{' '}
           <Box>
             {nextWeight && nextWeight.plates ? (
-              <Box as="p" textAlign="center">
-                <Box>
+              <Box as="div" textAlign="center">
+                <Box as="p">
                   Next weight to beat:{' '}
                   <Box as="span" color="red" fontSize={20}>
                     {nextWeight.totalWeight.toFixed(1)}

@@ -8,3 +8,11 @@ export const useSendInputData = (url) => {
 		}
 	})
 }
+
+export const useChangeInputData = (url) => {
+	return useMutation((newData) => TaskService.changeInputData(`${url}/1`, newData), {
+		onError: (error) => {
+			console.warn(`Error in sending input data for ${url}:`, error)
+		}
+	})
+}
