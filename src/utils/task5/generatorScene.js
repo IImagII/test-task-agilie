@@ -7,7 +7,7 @@ export const generateScene = (numActors, numRows, numCols) => {
 		}
 	}
 
-	// добавляем актеров
+	// додаємо акторів
 	for (let i = 0; i < numActors; i++) {
 		let row, col;
 		do {

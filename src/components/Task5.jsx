@@ -38,8 +38,9 @@ const Task5 = () => {
     const res = generateScene(actors, long, width)
 
     sendInputDataForTask.mutate(sizeSceneForm)
-    sendResponseData.mutate({ data: count })
+
     setCount(countGoodPositions(res))
+    sendResponseData.mutate({ data: count })
   }
 
   return (

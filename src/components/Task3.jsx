@@ -74,7 +74,6 @@ const Task3 = () => {
               placeholder="current weight"
               type="number"
               value={currentWeight}
-              // onChange={(e) => setCurrentWeight(e.target.valueAsNumber)}
               onChange={handleCurrentWeight}
             />
           </FormControl>{' '}

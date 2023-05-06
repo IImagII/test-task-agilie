@@ -5,16 +5,16 @@ export const countGoodPositions = (scene) => {
 
 	for (let i = 0; i < n; i++) {
 		for (let j = 0; j < m; j++) {
-			if (scene[i][j] === "A") continue; // если в ячейке уже есть актер, переходим к следующей ячейке
+			if (scene[i][j] === "A") continue; // якщо в осередку вже є актор, переходимо до наступного осередку
 
 			let hasActorInUp = false;
 			let hasActorInDown = false;
 			let hasActorInLeft = false;
 			let hasActorInRight = false;
 
-			// проверяем, есть ли актеры в направлении света фонаря
+			// перевіряємо, чи є актори у напрямку світла ліхтаря
 			for (let k = i - 1; k >= 0; k--) {
-				// вверх
+				// вгору
 				if (scene[k][j] === "A") {
 					hasActorInUp = true;
 					break;
@@ -28,7 +28,7 @@ export const countGoodPositions = (scene) => {
 				}
 			}
 			for (let k = j - 1; k >= 0; k--) {
-				// влево
+				// вліво
 				if (scene[i][k] === "A") {
 					hasActorInLeft = true;
 					break;
@@ -42,7 +42,7 @@ export const countGoodPositions = (scene) => {
 				}
 			}
 
-			// если в направлении света фонаря есть актеры, а в ячейке их нет, то это "хорошая позиция"
+			// якщо у напрямку світла ліхтаря є актори, а в осередку їх немає, то це 'хороша'
 			if (hasActorInUp || hasActorInDown || hasActorInLeft || hasActorInRight) {
 				count++;
 			}
